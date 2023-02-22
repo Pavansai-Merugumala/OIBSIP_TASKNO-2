@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>To-Do List</title>
+    <style>
+      body {
+        font-family: sans-serif;
+      }
+      h1 {
+        text-align: center;
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+      li {
+        margin: 10px 0;
+        padding: 10px;
+        background-color: #f1f1f1;
+        border-radius: 5px;
+      }
+      .task-time {
+        font-size: 12px;
+        color: gray;
+      }
+      .task-title {
+        font-weight: bold;
+        font-size: 18px;
+      }
+      .task-desc {
+        font-size: 16px;
+      }
+      .delete-button {
+        padding: 5px;
+        border-radius: 5px;
+        border: none;
+        background-color: #f44336;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        float: right;
+      }
+      input[type="text"] {
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        width: 80%;
+      }
+      textarea {
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        width: 80%;
+      }
+      input[type="submit"] {
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        background-color: #4CAF50;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>To-Do List</h1>
+    <form>
+      <input type="text" name="title" placeholder="Enter a title" required />
+      <textarea name="description" placeholder="Enter a description" required></textarea>
+      <input type="submit" value="Add" />
+    </form>
+    <ul id="tasks"></ul>
+    <script>
+      function addTask() {
+        var title = document.querySelector('input[name="title"]').value.trim();
+        var description = document.querySelector('textarea[name="description"]').value.trim();
+        if (title && description) {
+          var now = new Date();
+          var date = now.toLocaleDateString();
+          var time = now.toLocaleTimeString();
+          var li = document.createElement('li');
+          var taskTitle = document.createElement('h2');
+          taskTitle.textContent = title;
+          taskTitle.classList.add('task-title');
+          var taskDesc = document.createElement('p');
+          taskDesc.textContent = description;
+          taskDesc.classList.add('task-desc');
+          var taskTime = document.createElement('span');
+          taskTime.textContent = date + ' ' + time;
+          taskTime.classList.add('task-time');
+          var deleteButton = document.createElement('button');
+          deleteButton.textContent = 'Delete';
+          deleteButton.classList.add('delete-button');
+          deleteButton.addEventListener('click', function () {
+            this.parentNode.remove();
+          });
+          li.appendChild(taskTitle);
+          li.appendChild(taskDesc);
+          li.appendChild(taskTime);
+          li.appendChild(deleteButton);
+          document.querySelector('#tasks').appendChild(li);
+          document.querySelector('input[name="title"]').value = '';
+          document.querySelector('textarea[name="description"]').value = '';
+        }
+      }
+      document.querySelector('form').addEventListener('submit', function (event) {
+        event.preventDefault();
+        addTask();
+      });
+    </script>
+  </body>
+</html>
